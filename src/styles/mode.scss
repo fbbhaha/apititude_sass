@@ -1,0 +1,73 @@
+@import "../assets/scss/theme.scss";
+.dark {
+  // background-color: $menuBg;
+  // .app-main {
+  //     background-color: $darkBg;
+  // }
+  .navbar {
+    background-color: #001529;
+    border-bottom: 1px solid $darkBorder;
+    // .right-menu .right-menu-item {
+    //     color: #fff !important;
+    // }
+    .hamburger-container .icon-ym {
+      color: #fff;
+    }
+  }
+  // .tags-view-container {
+  //     background-color: $darkBg;
+  //     border-bottom: 1px solid $darkBorder;
+  //     .tags-view-wrapper {
+  //         .tags-view-item {
+  //             background-color: $darkBg;
+  //             color: #fff;
+  //             border-right: 1px solid $darkBorder;
+  //         }
+  //         .tags-view-item.active {
+  //             background-color: #ebeef5;
+  //             color: #666;
+  //         }
+  //     }
+  // }
+}
+
+.lightWhite {
+  background-color: #f5f7fc !important;
+  .right-menu .right-menu-item {
+    color: #333 !important;
+  }
+  .navbar .weather {
+    color: #333 !important;
+  }
+}
+
+@mixin card-header($colorRgba, $color) {
+  background-color: $colorRgba !important;
+  color: $color !important;
+}
+.vue-grid-item .blue .el-card__header {
+  @include card-header($blueRgba, $blue);
+}
+
+.vue-grid-item .purple .el-card__header {
+  @include card-header($purpleRgba, $purple);
+}
+
+.vue-grid-item .azure .el-card__header {
+  @include card-header($azureRgba, $azure);
+}
+.vue-grid-item .ocean .el-card__header {
+  @include card-header($oceanRgba, $ocean);
+}
+.vue-grid-item .green .el-card__header {
+  @include card-header($greenRgba, $green);
+}
+.vue-grid-item .yellow .el-card__header {
+  @include card-header($yellowRgba, $yellow);
+}
+.vue-grid-item .orange .el-card__header {
+  @include card-header($orangeRgba, $orange);
+}
+.vue-grid-item .red .el-card__header {
+  @include card-header($redRgba, $red);
+}

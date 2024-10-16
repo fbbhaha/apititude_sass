@@ -1,0 +1,65 @@
+{
+  "id": "3446773",
+  "name": "icon-ym-self",
+  "font_family": "ym-self",
+  "css_prefix_text": "ym-self-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "23626702",
+      "name": "按钮组",
+      "font_class": "generator-button-group",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
+    {
+      "icon_id": "750883",
+      "name": "二维码",
+      "font_class": "generator-qr-code",
+      "unicode": "71",
+      "unicode_decimal": 113
+    },
+    {
+      "icon_id": "1766507",
+      "name": "符号-Dialog",
+      "font_class": "generator-dialog-field",
+      "unicode": "e69f",
+      "unicode_decimal": 59039
+    },
+    {
+      "icon_id": "2736409",
+      "name": "条形码",
+      "font_class": "generator-bar-code",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "8017618",
+      "name": "mtbutton",
+      "font_class": "generator-button",
+      "unicode": "e6cc",
+      "unicode_decimal": 59084
+    },
+    {
+      "icon_id": "8094806",
+      "name": "collapse",
+      "font_class": "generator-collapse",
+      "unicode": "e900",
+      "unicode_decimal": 59648
+    },
+    {
+      "icon_id": "11982148",
+      "name": "tabs",
+      "font_class": "generator-tabs",
+      "unicode": "e9a8",
+      "unicode_decimal": 59816
+    },
+    {
+      "icon_id": "14629153",
+      "name": "dialog",
+      "font_class": "generator-dialog",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    }
+  ]
+}

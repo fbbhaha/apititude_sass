@@ -1,0 +1,50 @@
+@font-face {
+  font-family: "ym-self"; /* Project id 3446773 */
+  src: url('iconfont.eot?t=1655259375426'); /* IE9 */
+  src: url('iconfont.eot?t=1655259375426#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('iconfont.woff2?t=1655259375426') format('woff2'),
+       url('iconfont.woff?t=1655259375426') format('woff'),
+       url('iconfont.ttf?t=1655259375426') format('truetype'),
+       url('iconfont.svg?t=1655259375426#ym-self') format('svg');
+}
+
+.ym-self {
+  font-family: "ym-self" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ym-self-generator-button-group:before {
+  content: "\e649";
+}
+
+.ym-self-generator-qr-code:before {
+  content: "\71";
+}
+
+.ym-self-generator-dialog-field:before {
+  content: "\e69f";
+}
+
+.ym-self-generator-bar-code:before {
+  content: "\e626";
+}
+
+.ym-self-generator-button:before {
+  content: "\e6cc";
+}
+
+.ym-self-generator-collapse:before {
+  content: "\e900";
+}
+
+.ym-self-generator-tabs:before {
+  content: "\e9a8";
+}
+
+.ym-self-generator-dialog:before {
+  content: "\e60b";
+}
+
