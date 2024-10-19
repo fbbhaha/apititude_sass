@@ -9,9 +9,7 @@ export default {
     return {};
   },
   components: {},
-  mounted() {
-    console.log(this.$route.meta.zhTitle);
-  }
+  mounted() {}
 };
 </script>
 
@@ -22,6 +20,7 @@ export default {
   font-size: 16px;
   color: #242425;
   letter-spacing: 0.25px;
-  margin: 15px 20px;
+  margin: 20px 20px 10px;
+  height: 20px;
 }
 </style>

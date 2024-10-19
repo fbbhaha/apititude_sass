@@ -53,10 +53,6 @@ module.exports = {
         target: define.APIURl,
         changeOrigin: true
       }
-      // '/': {
-      //   target: 'http://q5jn2v.natappfree.cc/',
-      //   changeOrigin: true
-      // }
     }
   },
 

@@ -565,18 +565,6 @@ $transparent: transparent;
   @include mixinPopup($red);
 }
 
-// 白色
-#app .white {
-  @include mixinNavbar($white, $whiteSub);
-  @include mixinCommon($white, $whiteSub);
-  @include mixinSidebar($white);
-  @extend .ligthNavbar;
-}
-
-.red {
-  @include mixinPopup($red);
-}
-
 :export {
   blueTheme: $blue;
   blueRgbaTheme: $blueRgba;
@@ -597,5 +585,4 @@ $transparent: transparent;
   redRgbaTheme: $redRgba;
   lightTheme: $light;
   darkTheme: $dark;
-  whiteTheme: $white;
 }

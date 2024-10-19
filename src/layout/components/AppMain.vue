@@ -1,28 +1,28 @@
 <template>
   <section class="app-main" :copyright="sysConfig.copyright">
-    <keep-alive :include="useCache?cachedViews:[]">
+    <keep-alive :include="useCache ? cachedViews : []">
       <router-view :key="key" />
     </keep-alive>
   </section>
 </template>
 <script>
 export default {
-  name: 'AppMain',
+  name: "AppMain",
   computed: {
     cachedViews() {
-      return this.$store.state.tagsView.cachedViews
+      return this.$store.state.tagsView.cachedViews;
     },
     useCache() {
-      return this.$store.state.settings.useCache
+      return this.$store.state.settings.useCache;
     },
     key() {
-      return this.$route.path
+      return this.$route.path;
     },
     sysConfig() {
-      return this.$store.state.settings.sysConfig
+      return this.$store.state.settings.sysConfig;
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -59,7 +59,7 @@ export default {
 
 .hasTagsView {
   .app-main {
-    height: calc(100vh - 100px);
+    height: calc(100vh - 110px);
   }
 
   .fixed-header + .app-main {
