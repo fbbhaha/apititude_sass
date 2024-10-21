@@ -2,11 +2,11 @@ import request from '@/utils/request'
 
 
 // 获取客户列表
-export const getCustomerList = (params) => {
+export const getCustomerList = (data) => {
     return request({
-        url: `/api/extend/saleOrder/Customer`,
-        method: 'get',
-        params
+        url: `/api/extend/Kmkbasecompany/getList`,
+        method: 'post',
+        data
     })
 }
 // 新增

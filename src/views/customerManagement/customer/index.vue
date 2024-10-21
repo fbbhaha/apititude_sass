@@ -53,7 +53,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="客户名称"> </el-table-column>
+        <el-table-column prop="companyName" label="客户名称"> </el-table-column>
         <el-table-column prop="code" label="客户类型"> </el-table-column>
         <el-table-column prop="customerName" label="业务员"> </el-table-column>
         <el-table-column prop="customerName" label="联系人"> </el-table-column>

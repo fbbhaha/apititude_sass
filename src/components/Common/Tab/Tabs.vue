@@ -53,11 +53,16 @@ export default {
 <style scpoed lang="scss">
 .Tab {
   padding: 20px 50px;
+  height: 100%;
+  box-sizing: border-box;
+
   .tabList {
+    height: 45px;
     display: flex;
     align-items: center;
-    gap: 35px;
+    gap: 0 35px;
     padding: 0 0 15px;
+    box-sizing: border-box;
     .tabItem {
       padding: 0 0 10px;
       font-family: PingFangSC-Regular;
@@ -84,6 +89,7 @@ export default {
     }
   }
   .tabContent {
+    height: calc(100% - 45px);
   }
 }
 </style>

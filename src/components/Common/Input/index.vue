@@ -74,5 +74,9 @@ export default {
       height: 100%;
     }
   }
+  .el-select {
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>

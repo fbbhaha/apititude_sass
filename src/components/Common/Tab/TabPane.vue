@@ -27,5 +27,7 @@ export default {
 
 <style scpoed lang="scss">
 .TabPane {
+  height: 100%;
+  overflow: auto;
 }
 </style>
