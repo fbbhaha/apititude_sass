@@ -1,6 +1,31 @@
 <template>
   <div class="ActionHistory">
-    <div class="leftContent"></div>
+    <div class="leftContent">
+      <div class="searchBox">
+        <el-input
+          v-model="searchParams.personName"
+          placeholder="请输入姓名"
+          prefix-icon="el-icon-search"
+        />
+      </div>
+      <div class="personList">
+        <div
+          :class="{ personItem: true, selected: selectedPersonIndex == index }"
+          v-for="(item, index) in personList"
+          :key="item.id"
+          @click="selectedPersonIndex = index"
+        >
+          <el-avatar
+            shape="square"
+            :src="item.avatar"
+            :size="50"
+            style="grid-row: 1 / 3; "
+          ></el-avatar>
+          <div class="name">{{ item.name }}</div>
+          <div class="position">{{ item.position }}</div>
+        </div>
+      </div>
+    </div>
     <div class="rightContent">
       <div class="searchBox">
         <div class="left">
@@ -14,7 +39,7 @@
         <div class="right">
           <el-input
             v-model="searchParams.companyName"
-            placeholder="请输入客户信息"
+            placeholder="请输入行动信息"
             prefix-icon="el-icon-search"
             style="margin-right: 20px;"
           >
@@ -25,16 +50,47 @@
       </div>
       <div class="content">
         <div class="filterBox">
-          <div class="filterItem selected">不做筛选</div>
-          <div class="filterItem">未跟进</div>
-          <div class="filterItem">建立过销售机会</div>
-          <div class="filterItem">已成交</div>
-          <div class="filterItem">今日要跟进</div>
-          <div class="filterItem">公海</div>
-          <div class="filterItem">筛选客户标识</div>
+          <div
+            :class="{
+              filterItem: true,
+              selected: searchParams.recordType == index
+            }"
+            v-for="(item, index) in filterButtons"
+            :key="item.name"
+            @click="searchParams.recordType = index"
+          >
+            <img :src="item.icon" alt="" />
+            {{ item.name }}
+          </div>
         </div>
         <div class="cardList">
-          <div class="cardItem" v-for="item in recordList" :key="item"></div>
+          <div class="cardItem" v-for="(item, index) in recordList" :key="item">
+            <div class="top">
+              <div class="left">
+                <el-avatar
+                  shape="square"
+                  :src="item.avatar"
+                  :size="50"
+                ></el-avatar>
+                <span>{{ item.position }}</span>
+              </div>
+              <div class="right">
+                <div class="name">{{ item.name }}</div>
+                <div class="dateType">
+                  {{
+                    item.datetime +
+                      "      " +
+                      filterButtons[item.recordType].name
+                  }}
+                </div>
+                <div class="msg">{{ item.content }}</div>
+              </div>
+            </div>
+            <div class="bottom">
+              <i class="el-icon-edit" @click="editBaseMessage(scope.row)"></i>
+              <i class="el-icon-delete"></i>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -42,6 +98,7 @@
 </template>
 
 <script>
+// import daat from "@./../../../../assets/images/customer";
 export default {
   name: "ActionHistory",
   data() {
@@ -50,9 +107,140 @@ export default {
         companyName: "",
         companyType: null,
         currentPage: 1,
-        pageSize: 10
+        pageSize: 10,
+        personName: "",
+        recordType: 0
       },
-      recordList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+      recordList: [
+        {
+          name: "张三",
+          position: "CEO",
+          avatar:
+            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
+          datetime: "2024-09-10 12:30:00",
+          recordType: 1,
+          content: "回访客户，询问产品使用后的效果"
+        },
+        {
+          name: "张三",
+          position: "CEO",
+          avatar:
+            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
+          datetime: "2024-09-10 12:30:00",
+          recordType: 1,
+          content: "回访客户，询问产品使用后的效果"
+        },
+        {
+          name: "张三",
+          position: "CEO",
+          avatar:
+            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
+          datetime: "2024-09-10 12:30:00",
+          recordType: 1,
+          content: "回访客户，询问产品使用后的效果"
+        },
+        {
+          name: "张三",
+          position: "CEO",
+          avatar:
+            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
+          datetime: "2024-09-10 12:30:00",
+          recordType: 1,
+          content: "回访客户，询问产品使用后的效果"
+        }
+      ],
+      personList: [
+        {
+          name: "张三",
+          id: 1,
+          position: "CEO",
+          avatar:
+            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+        },
+        {
+          name: "李四",
+          id: 2,
+          position: "CFO",
+          avatar:
+            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+        },
+        {
+          name: "测试1",
+          id: 3,
+          position: "职员",
+          avatar:
+            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+        },
+        {
+          name: "测试2",
+          id: 4,
+          position: "职员",
+          avatar:
+            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+        },
+        {
+          name: "张三",
+          id: 1,
+          position: "CEO",
+          avatar:
+            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+        },
+        {
+          name: "李四",
+          id: 2,
+          position: "CFO",
+          avatar:
+            "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+        }
+      ],
+      selectedPersonIndex: 0,
+      filterButtons: [
+        {
+          name: "不做筛选",
+          icon: require("@/assets/images/customer/bsx.png"),
+          value: ""
+        },
+        {
+          name: "销售工作",
+          icon: require("@/assets/images/customer/xsgz.png"),
+          value: ""
+        },
+        {
+          name: "账号试用",
+          icon: require("@/assets/images/customer/zhsy.png"),
+          value: ""
+        },
+        {
+          name: "系统安装",
+          icon: require("@/assets/images/customer/xtaz.png"),
+          value: ""
+        },
+        {
+          name: "演示系统",
+          icon: require("@/assets/images/customer/ysxt.png"),
+          value: ""
+        },
+        {
+          name: "老客户关系维护",
+          icon: require("@/assets/images/customer/gxwh.png"),
+          value: ""
+        },
+        {
+          name: "提需求",
+          icon: require("@/assets/images/customer/xq.png"),
+          value: ""
+        },
+        {
+          name: "系统培训",
+          icon: require("@/assets/images/customer/xtpx.png"),
+          value: ""
+        },
+        {
+          name: "售后客户服务",
+          icon: require("@/assets/images/customer/shkhfw.png"),
+          value: ""
+        }
+      ]
     };
   },
   components: {}
@@ -69,6 +257,41 @@ export default {
     height: 100%;
     background: #f5f7fc;
     border: 1px solid #e5e6e8;
+    padding: 20px 12px;
+    .searchBox {
+      height: 40px;
+    }
+    .personList {
+      height: calc(100% - 40px);
+      overflow: auto;
+      .personItem {
+        padding: 16px 0;
+        border-bottom: 1px solid #eaeef3;
+        display: grid;
+        grid-template-columns: 50px auto;
+        align-items: center;
+        gap: 0 10px;
+        cursor: pointer;
+        .name {
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+          font-size: 16px;
+          color: #242425;
+        }
+        .position {
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+          font-size: 14px;
+          color: #242425;
+        }
+      }
+      .selected {
+        background-color: #c9d3ed;
+        padding: 16px 10px;
+        border-radius: 10px;
+        transition: all 0.5s;
+      }
+    }
   }
   .rightContent {
     height: 100%;
@@ -92,7 +315,6 @@ export default {
       border-radius: 4px;
 
       .filterBox {
-        // padding: 16px 24px;
         padding: 0 20px;
         height: 56px;
         background: #f5f7fc;
@@ -108,6 +330,10 @@ export default {
           color: #242425;
           letter-spacing: 0.22px;
           padding: 10px 15px;
+          display: flex;
+          align-items: center;
+          gap: 3px;
+          cursor: pointer;
           &.selected {
             background: #c9d3ed;
             border-radius: 4px;
@@ -127,6 +353,56 @@ export default {
           box-shadow: 0 2px 4px 0 #0000000d, 0 1px 2px 0 #190f0f12,
             0 0 1px 0 #00000014;
           border-radius: 6px;
+          display: flex;
+          flex-direction: column;
+
+          .top {
+            display: flex;
+            gap: 16px;
+            flex-grow: 1;
+            padding: 20px;
+            .left {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              gap: 10px;
+              span {
+                font-weight: 400;
+                font-size: 14px;
+                color: #242425;
+              }
+            }
+            .right {
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              .name {
+                font-weight: 500;
+                font-size: 18px;
+                color: #1677ff;
+              }
+              .dateType {
+                font-family: PingFangSC-Regular;
+                font-weight: 400;
+                font-size: 14px;
+                color: #54585a;
+              }
+              .msg {
+                font-family: PingFangSC-Regular;
+                font-weight: 400;
+                font-size: 14px;
+                color: #242425;
+              }
+            }
+          }
+          .bottom {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 10px 20px;
+            gap: 20px;
+            border-top: 1px solid #54585a33;
+          }
         }
       }
     }
