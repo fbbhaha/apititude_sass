@@ -5,7 +5,7 @@
         <el-button
           type="primary"
           icon="el-icon-circle-plus-outline"
-          @click="showBaseMessage = true"
+          @click="showMessageDialog = true"
           >新增客户</el-button
         >
       </div>
@@ -39,15 +39,6 @@
         <el-table-column label="操作" align="center" width="140">
           <template slot-scope="scope">
             <div class="operationButtons">
-              <i
-                class="el-icon-pie-chart"
-                @click="
-                  () => {
-                    showExtraMessage = true;
-                    baseMessage = scope.row;
-                  }
-                "
-              ></i>
               <i class="el-icon-edit" @click="editBaseMessage(scope.row)"></i>
               <i class="el-icon-delete"></i>
             </div>
@@ -62,15 +53,13 @@
         <el-table-column prop="code" label="最后行动时间"> </el-table-column>
       </el-table>
     </div>
-    <BaseMessage :show.sync="showBaseMessage" :data="baseMessage" />
-    <ExtraMessage :show.sync="showExtraMessage" :data="baseMessage" />
+    <Message :show.sync="showMessageDialog" :data="baseMessage" />
   </div>
 </template>
 
 <script>
 import { getCustomerList } from "@/api/customter";
-import BaseMessage from "./components/BaseMessage/index.vue";
-import ExtraMessage from "./components/ExtraMessage/index.vue";
+import Message from "./components/Message/index.vue";
 export default {
   name: "customer",
   data() {
@@ -82,12 +71,11 @@ export default {
         pageSize: 10
       },
       tableData: [],
-      showBaseMessage: false,
-      showExtraMessage: false,
+      showMessageDialog: false,
       baseMessage: null
     };
   },
-  components: { BaseMessage, ExtraMessage },
+  components: { Message },
   mounted() {
     this.initTableList();
   },
@@ -99,7 +87,7 @@ export default {
     },
     editBaseMessage(data) {
       this.baseMessage = data;
-      this.showBaseMessage = true;
+      this.showMessageDialog = true;
     }
   }
 };

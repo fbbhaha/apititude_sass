@@ -1,10 +1,10 @@
 <template>
-  <div class="Base">
+  <div class="CustomerMessage">
     <el-form class="formBox">
       <CommonInput label="客户名称" :prop="'name'">
         <el-input />
       </CommonInput>
-      <CommonInput label="关联客户" :prop="'name'">
+      <CommonInput label="回落公海" :prop="'name'">
         <el-input />
       </CommonInput>
       <CommonInput label="主联系人" :prop="'name'">
@@ -27,25 +27,21 @@
       <CommonInput label="客户来源" :prop="'name'">
         <el-input />
       </CommonInput>
-      <CommonInput label="所在省份" :prop="'name'">
+      <CommonInput label="所在省市区" :prop="'name'">
         <el-input />
       </CommonInput>
-      <CommonInput label="所在城市" :prop="'name'">
-        <el-input />
-      </CommonInput>
+
       <CommonInput label="工作地址" :prop="'name'">
         <el-input />
       </CommonInput>
-      <CommonInput label="回落公海" :prop="'name'">
-        <el-input />
-      </CommonInput>
-      <CommonInput
+
+      <!-- <CommonInput
         label="备注"
         :prop="'name'"
         style="grid-column: 1 / 3;height:76px"
       >
         <el-input type="textarea" />
-      </CommonInput>
+      </CommonInput> -->
       <tips-title text="客户基础信息" tips="测试" style="grid-column: 1 / 3;" />
       <CommonInput label="组织机构代码" :prop="'name'">
         <el-input />
@@ -68,6 +64,95 @@
       <CommonInput label="主营产品" :prop="'name'">
         <el-input />
       </CommonInput>
+      <tips-title text="投资规划(万元)" style="grid-column: 1 / 3;" />
+      <CommonInput
+        label="近三年总投资"
+        :prop="'name'"
+        style="grid-column: 1 / 3;"
+      >
+        <el-input />
+      </CommonInput>
+      <CommonInput label="近三年软件投资" :prop="'name'">
+        <el-input />
+      </CommonInput>
+      <CommonInput label="近三年设备投资" :prop="'name'">
+        <el-input />
+      </CommonInput>
+      <CommonInput
+        label="未来几年总投资"
+        :prop="'name'"
+        style="grid-column: 1 / 3;"
+      >
+        <el-input />
+      </CommonInput>
+      <CommonInput label="未来几年软件投资" :prop="'name'">
+        <el-input />
+      </CommonInput>
+      <CommonInput label="未来几年设备投资" :prop="'name'">
+        <el-input />
+      </CommonInput>
+      <tips-title text="荣誉、体系、标准、案例" style="grid-column: 1 / 3;" />
+      <CommonInput
+        label="已获得荣誉"
+        :prop="'name'"
+        style="grid-column: 1 / 3;"
+      >
+        <el-input />
+      </CommonInput>
+      <CommonInput label="体系建设" :prop="'name'" style="grid-column: 1 / 3;">
+        <el-checkbox-group v-model="formData.txjs">
+          <el-checkbox
+            :label="item.fullName"
+            v-for="item in dictionary.txjs"
+            :key="item.id"
+          ></el-checkbox>
+        </el-checkbox-group>
+      </CommonInput>
+      <CommonInput label="知识产权" :prop="'name'" style="grid-column: 1 / 3;">
+        <el-checkbox-group v-model="formData.txjs">
+          <el-checkbox
+            :label="item.fullName"
+            v-for="item in dictionary.txjs"
+            :key="item.id"
+          ></el-checkbox>
+        </el-checkbox-group>
+      </CommonInput>
+      <CommonInput label="标准情况" :prop="'name'" style="grid-column: 1 / 3;">
+        <el-checkbox-group v-model="formData.txjs">
+          <el-checkbox
+            :label="item.fullName"
+            v-for="item in dictionary.txjs"
+            :key="item.id"
+          ></el-checkbox>
+        </el-checkbox-group>
+      </CommonInput>
+      <tips-title text="智能制造" style="grid-column: 1 / 3;" />
+      <CommonInput
+        label="信息化建设"
+        :prop="'name'"
+        style="grid-column: 1 / 3;"
+      >
+        <el-checkbox-group v-model="formData.txjs">
+          <el-checkbox
+            :label="item.fullName"
+            v-for="item in dictionary.txjs"
+            :key="item.id"
+          ></el-checkbox>
+        </el-checkbox-group>
+      </CommonInput>
+      <CommonInput
+        label="自动化建设"
+        :prop="'name'"
+        style="grid-column: 1 / 3;"
+      >
+        <el-checkbox-group v-model="formData.txjs">
+          <el-checkbox
+            :label="item.fullName"
+            v-for="item in dictionary.txjs"
+            :key="item.id"
+          ></el-checkbox>
+        </el-checkbox-group>
+      </CommonInput>
     </el-form>
     <div class="bottomButton">
       <el-button>取消</el-button>
@@ -81,7 +166,7 @@ import CommonInput from "@/components/Common/Input/index.vue";
 import TipsTitle from "@/views/customerManagement/components/TipsTitle.vue";
 
 export default {
-  name: "Base",
+  name: "CustomerMessage",
   data() {
     return {
       dictionary: {
@@ -126,7 +211,36 @@ export default {
             children: null,
             sortCode: 0
           }
+        ],
+        txjs: [
+          {
+            id: "614925127691277765",
+            parentId: null,
+            fullName: "质量管理体系",
+            enCode: "zlgltx"
+          },
+          {
+            id: "614925243705726405",
+            parentId: null,
+            fullName: "环境管理体系",
+            enCode: "hjgltx"
+          },
+          {
+            id: "614925358843565509",
+            parentId: null,
+            fullName: "职业健康管理体系",
+            enCode: "zyjkgltx"
+          },
+          {
+            id: "614925543652988357",
+            parentId: null,
+            fullName: "两化融合贯标",
+            enCode: "lhrhgb"
+          }
         ]
+      },
+      formData: {
+        txjs: []
       }
     };
   },
@@ -135,7 +249,7 @@ export default {
 </script>
 
 <style scpoed lang="scss">
-.Base {
+.CustomerMessage {
   min-height: 100%;
   display: flex;
   flex-direction: column;

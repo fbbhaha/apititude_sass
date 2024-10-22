@@ -78,5 +78,13 @@ export default {
     width: 100%;
     height: 100%;
   }
+  .el-checkbox-group {
+    height: 100%;
+    border: 1px solid #dcdfe6;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+  }
 }
 </style>

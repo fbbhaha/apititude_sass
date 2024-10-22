@@ -57,12 +57,12 @@ export default {
   box-sizing: border-box;
 
   .tabList {
-    height: 45px;
+    height: 30px;
     display: flex;
     align-items: center;
     gap: 0 35px;
-    padding: 0 0 15px;
-    box-sizing: border-box;
+    padding: 10px 0 10px;
+    box-sizing: content-box;
     .tabItem {
       padding: 0 0 10px;
       font-family: PingFangSC-Regular;
@@ -74,10 +74,10 @@ export default {
       cursor: pointer;
       &::after {
         content: "";
-        width: 24px;
+        width: 28px;
         height: 4px;
         position: absolute;
-        bottom: 0px;
+        bottom: -10px;
         left: 50%;
         transform: translateX(-50%);
       }
@@ -89,7 +89,7 @@ export default {
     }
   }
   .tabContent {
-    height: calc(100% - 45px);
+    height: calc(100% - 50px);
   }
 }
 </style>

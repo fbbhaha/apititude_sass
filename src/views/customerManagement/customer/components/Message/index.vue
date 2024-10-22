@@ -82,6 +82,7 @@ export default {
     background: #f5f7fc;
     .el-drawer__header {
       margin-bottom: 0;
+      padding: unset;
     }
   }
 }

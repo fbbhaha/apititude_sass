@@ -29,5 +29,8 @@ export default {
 .TabPane {
   height: 100%;
   overflow: auto;
+  background-color: #fff;
+  padding: 28px 30px;
+  box-sizing: border-box;
 }
 </style>

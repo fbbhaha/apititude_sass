@@ -1,5 +1,5 @@
 <template>
-  <div class="Contact">
+  <div class="ContactPerson">
     <div class="topButtons">
       <el-button
         type="primary"
@@ -36,7 +36,7 @@
 
 <script>
 export default {
-  name: "Contact",
+  name: "ContactPerson",
   data() {
     return {
       showDialog: false
@@ -50,7 +50,7 @@ export default {
 </script>
 
 <style scpoed lang="scss">
-.Contact {
+.ContactPerson {
   .topButtons {
     margin-bottom: 20px;
   }
