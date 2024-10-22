@@ -32,7 +32,7 @@
           <el-button
             type="primary"
             icon="el-icon-circle-plus-outline"
-            @click="showMessageDialog = true"
+            @click="showDialog = true"
             >新增行动记录</el-button
           >
         </div>
@@ -64,7 +64,7 @@
           </div>
         </div>
         <div class="cardList">
-          <div class="cardItem" v-for="(item, index) in recordList" :key="item">
+          <div class="cardItem" v-for="item in recordList" :key="item">
             <div class="top">
               <div class="left">
                 <el-avatar
@@ -79,26 +79,61 @@
                 <div class="dateType">
                   {{
                     item.datetime +
-                      "      " +
-                      filterButtons[item.recordType].name
+                      "&nbsp;&nbsp;&nbsp;" +
+                      dictionary.xdlx[item.recordType].name
                   }}
                 </div>
                 <div class="msg">{{ item.content }}</div>
               </div>
             </div>
             <div class="bottom">
-              <i class="el-icon-edit" @click="editBaseMessage(scope.row)"></i>
+              <i class="el-icon-edit" @click="editBaseMessage(item)"></i>
               <i class="el-icon-delete"></i>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <el-dialog :visible.sync="showDialog" :modal="false" width="500px">
+      <el-form :model="form">
+        <el-form-item label="行动类型">
+          <el-select
+            v-model="dialogData.recordType"
+            placeholder="请选择行动类型"
+          >
+            <el-option
+              :label="item.name"
+              :value="item.value"
+              v-for="item in dictionary.xdlx"
+              :key="item.name"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="行动时间">
+          <el-date-picker
+            v-model="dialogData.datetime"
+            type="date"
+            placeholder="选择日期"
+          >
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="详细信息">
+          <el-input
+            v-model="dialogData.content"
+            autocomplete="off"
+            style="width:300px"
+          ></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="showDialog = false">取 消</el-button>
+        <el-button type="primary" @click="showDialog = false">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-// import daat from "@./../../../../assets/images/customer";
 export default {
   name: "ActionHistory",
   data() {
@@ -118,7 +153,7 @@ export default {
           avatar:
             "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
           datetime: "2024-09-10 12:30:00",
-          recordType: 1,
+          recordType: "1",
           content: "回访客户，询问产品使用后的效果"
         },
         {
@@ -127,7 +162,7 @@ export default {
           avatar:
             "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
           datetime: "2024-09-10 12:30:00",
-          recordType: 1,
+          recordType: "1",
           content: "回访客户，询问产品使用后的效果"
         },
         {
@@ -136,7 +171,7 @@ export default {
           avatar:
             "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
           datetime: "2024-09-10 12:30:00",
-          recordType: 1,
+          recordType: "1",
           content: "回访客户，询问产品使用后的效果"
         },
         {
@@ -145,7 +180,7 @@ export default {
           avatar:
             "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
           datetime: "2024-09-10 12:30:00",
-          recordType: 1,
+          recordType: "1",
           content: "回访客户，询问产品使用后的效果"
         }
       ],
@@ -194,56 +229,76 @@ export default {
         }
       ],
       selectedPersonIndex: 0,
-      filterButtons: [
-        {
-          name: "不做筛选",
-          icon: require("@/assets/images/customer/bsx.png"),
-          value: ""
-        },
-        {
-          name: "销售工作",
-          icon: require("@/assets/images/customer/xsgz.png"),
-          value: ""
-        },
-        {
-          name: "账号试用",
-          icon: require("@/assets/images/customer/zhsy.png"),
-          value: ""
-        },
-        {
-          name: "系统安装",
-          icon: require("@/assets/images/customer/xtaz.png"),
-          value: ""
-        },
-        {
-          name: "演示系统",
-          icon: require("@/assets/images/customer/ysxt.png"),
-          value: ""
-        },
-        {
-          name: "老客户关系维护",
-          icon: require("@/assets/images/customer/gxwh.png"),
-          value: ""
-        },
-        {
-          name: "提需求",
-          icon: require("@/assets/images/customer/xq.png"),
-          value: ""
-        },
-        {
-          name: "系统培训",
-          icon: require("@/assets/images/customer/xtpx.png"),
-          value: ""
-        },
-        {
-          name: "售后客户服务",
-          icon: require("@/assets/images/customer/shkhfw.png"),
-          value: ""
-        }
-      ]
+
+      dictionary: {
+        xdlx: [
+          {
+            name: "销售工作",
+            icon: require("@/assets/images/customer/xsgz.png"),
+            value: "0"
+          },
+          {
+            name: "账号试用",
+            icon: require("@/assets/images/customer/zhsy.png"),
+            value: "1"
+          },
+          {
+            name: "系统安装",
+            icon: require("@/assets/images/customer/xtaz.png"),
+            value: "2"
+          },
+          {
+            name: "演示系统",
+            icon: require("@/assets/images/customer/ysxt.png"),
+            value: "3"
+          },
+          {
+            name: "老客户关系维护",
+            icon: require("@/assets/images/customer/gxwh.png"),
+            value: "4"
+          },
+          {
+            name: "提需求",
+            icon: require("@/assets/images/customer/xq.png"),
+            value: "5"
+          },
+          {
+            name: "系统培训",
+            icon: require("@/assets/images/customer/xtpx.png"),
+            value: "6"
+          },
+          {
+            name: "售后客户服务",
+            icon: require("@/assets/images/customer/shkhfw.png"),
+            value: "7"
+          }
+        ]
+      },
+      filterButtons: [],
+      showDialog: false,
+      dialogData: {
+        recordType: "0",
+        datetime: "",
+        content: ""
+      }
     };
   },
-  components: {}
+  mounted() {
+    this.filterButtons = [
+      {
+        name: "不做筛选",
+        icon: require("@/assets/images/customer/bsx.png"),
+        value: ""
+      },
+      ...this.dictionary.xdlx
+    ];
+  },
+  methods: {
+    editBaseMessage(data) {
+      this.showDialog = true;
+      this.dialogData = data;
+    }
+  }
 };
 </script>
 
@@ -402,6 +457,12 @@ export default {
             padding: 10px 20px;
             gap: 20px;
             border-top: 1px solid #54585a33;
+            i {
+              cursor: pointer;
+              &:hover {
+                color: #1677ff;
+              }
+            }
           }
         }
       }
