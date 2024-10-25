@@ -36,45 +36,45 @@ import Layout from '@/layout'
 
 // component: (resolve) => require(["@/views/login/index"], resolve),
 export const constantRoutes = [{
-    path: '/redirect',
-    component: Layout,
-    hidden: true,
-    children: [{
-      path: '/redirect/:path*',
-      component: (resolve) => require(['@/views/redirect'], resolve)
-    }]
-  },
-  {
-    path: '/login',
-    component: (resolve) => require(['@/views/login'], resolve),
-    hidden: true
-  },
-  {
-    path: '/loginindex',
-    component: (resolve) => require(['@/views/login/index1'], resolve),
-    hidden: true
-  },
-  {
-    path: '/lockScreen',
-    component: (resolve) => require(['@/views/basic/lockScreen'], resolve),
-    hidden: true
-  },
-  {
-    path: '/auth-redirect',
-    component: (resolve) => require(['@/views/login/auth-redirect'], resolve),
-    hidden: true
-  },
-  {
-    path: '/crm_supervision_task_app',
-    component: (resolve) => require(['@/views/extend/crm_supervision_task_app'], resolve),
-    name: 'crm_supervision_task_app',
-    meta: {
-      title: 'crm_supervision_task_app',
-      affix: false,
-      zhTitle: '我的督办(移动端)',
-      icon: 'icon-ym icon-ym-user',
-    }
-  },
+  path: '/redirect',
+  component: Layout,
+  hidden: true,
+  children: [{
+    path: '/redirect/:path*',
+    component: (resolve) => require(['@/views/redirect'], resolve)
+  }]
+},
+// {
+//   path: '/login',
+//   component: (resolve) => require(['@/views/login'], resolve),
+//   hidden: true
+// },
+{
+  path: '/login',
+  component: (resolve) => require(['@/views/login/index1'], resolve),
+  hidden: true
+},
+{
+  path: '/lockScreen',
+  component: (resolve) => require(['@/views/basic/lockScreen'], resolve),
+  hidden: true
+},
+{
+  path: '/auth-redirect',
+  component: (resolve) => require(['@/views/login/auth-redirect'], resolve),
+  hidden: true
+},
+{
+  path: '/crm_supervision_task_app',
+  component: (resolve) => require(['@/views/extend/crm_supervision_task_app'], resolve),
+  name: 'crm_supervision_task_app',
+  meta: {
+    title: 'crm_supervision_task_app',
+    affix: false,
+    zhTitle: '我的督办(移动端)',
+    icon: 'icon-ym icon-ym-user',
+  }
+},
 ]
 
 const createRouter = () => new Router({

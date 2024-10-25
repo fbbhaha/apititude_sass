@@ -4,37 +4,34 @@
     @keyup.enter.native="handleLogin"
     :style="loginbgImage"
   >
-    <!-- <div class="login-version">
-      <p class="login-version-text">
-        {{ $t("login.version") }} {{ define.version }}
-      </p>
-    </div> -->
-    <div class="login-content" :style="contentWidth">
+    <div class="login-content">
       <div class="login-img"></div>
-      <!-- <img
-        class="login-img"
-        src=""
-        alt=""
-      /> -->
-      <!-- ../../assets/images/login_content_img.png -->
       <div class="login-form">
-        <div class="login-logo"></div>
-        <!-- <img
-          class="login-logo"
-          src="../../assets/loginimg/zhineng.png"
-          alt=""
-        /> -->
- 
+        <div class="login-type">
+          <div
+            :class="{ 'login-title': true, selected: loginType === 1 }"
+            @click="loginType = 1"
+          >
+            账号登录
+          </div>
+          <div
+            :class="{ 'login-title': true, selected: loginType === 2 }"
+            @click="loginType = 2"
+          >
+            手机号登录
+          </div>
+        </div>
         <el-form
-          style="margin: 40px 0"
-          v-show="active == 1"
           ref="loginForm"
           :model="loginForm"
           :rules="loginRules"
           autocomplete="on"
           label-position="left"
+          v-if="loginType === 1"
         >
           <el-form-item prop="account">
+            <img src="../../assets/loginimg/username.png" alt="" />
+
             <el-input
               ref="account"
               v-model="loginForm.account"
@@ -43,8 +40,8 @@
               type="text"
               tabindex="1"
               autocomplete="on"
-              prefix-icon="el-icon-user"
               size="large"
+              placeholder="请输入用户名"
             ></el-input>
           </el-form-item>
           <!--<el-form-item class="rule-tip">{{$t('login.rule')}}</el-form-item>-->
@@ -55,6 +52,7 @@
             manual
           >
             <el-form-item prop="password">
+              <img src="../../assets/loginimg/password.png" alt="" />
               <el-input
                 ref="password"
                 v-model="loginForm.password"
@@ -65,13 +63,13 @@
                 autocomplete="on"
                 @keyup.native="checkCapslock"
                 @blur="capsTooltip = false"
-                prefix-icon="el-icon-lock"
                 size="large"
+                placeholder="请输入密码"
               ></el-input>
               <!-- @keyup.enter.native="handleLogin" -->
             </el-form-item>
           </el-tooltip>
-          <template v-if="needVerification">
+          <!-- <template v-if="needVerification">
             <el-form-item prop="code" v-if="verificationType == 0">
               <el-input
                 ref="code"
@@ -102,8 +100,8 @@
                 @on-error="loginForm.sliderCheck = false"
               ></SliderCheck>
             </el-form-item>
-          </template>
-          <el-form-item>
+          </template> -->
+          <!-- <el-form-item>
             <el-checkbox v-model="remember" style="color: #a0a0a0"
               >自动登录</el-checkbox
             >
@@ -116,7 +114,7 @@
               "
               >忘记密码？</span
             >
-          </el-form-item>
+          </el-form-item> -->
           <el-button
             :loading="loading"
             type="primary"
@@ -125,69 +123,23 @@
             @click.native.prevent="handleLogin"
             >{{ $t("login.logIn") }}</el-button
           >
-          <!-- <div class="foot">
+
+          <div class="foot">
             <span class="register">立即注册</span>
             <span class="forget">忘记密码</span>
-          </div> -->
-        </el-form>
-        <div v-show="active == 2" class="login-form-QRCode">
-          <img class="qrcode-img" src="../../assets/images/login_qr.png" />
-          <p class="qrcode-tip">{{ $t("login.scanTip") }}</p>
-        </div>
-        <div v-show="active == 3">
-          <div style="position: relative">
-            <div class="face-scan">
-              <div v-if="!cut" class="face-scan-inner">
-                <video
-                  id="video_login"
-                  width="210px"
-                  height="210px"
-                  autoplay="autoplay"
-                  style="
-                    border-radius: 10px;
-                    margin-top: 70px;
-                    margin-left: 72px;
-                  "
-                ></video>
-                <canvas
-                  id="canvas_login"
-                  width="210px"
-                  height="210px"
-                  style="display: none"
-                ></canvas>
-              </div>
-              <div v-else class="face-scan-inner">
-                <img
-                  :src="imgData"
-                  alt=""
-                  style="
-                    width: 210px;
-                    height: 210px;
-                    border-radius: 10px;
-                    margin-top: 70px;
-                    margin-left: 72px;
-                  "
-                />
-              </div>
-            </div>
-            <div v-show="faceShow" class="face-scan face-scan-img"></div>
-            <div v-show="success" class="face-scan face-scan-success-img"></div>
-            <div v-html="faceMsg" class="log-font"></div>
           </div>
-        </div>
+          <div class="forgetPassword">
+            <el-checkbox v-model="confirmAgreement"
+              >已阅读并同意详情查看《注册协议》《保密协议》</el-checkbox
+            >
+          </div>
+        </el-form>
       </div>
-    </div>
-    <div class="login-foot">
-      <span
-        >助力企业研发管理数字化转型<br />安徽穹极信息科技有限公司, All
-        Rights Reserved.
-      </span>
     </div>
   </div>
 </template>
 
 <script>
-import { faceLogin, faceScan } from "@/api/system/face";
 import { mapState } from "vuex";
 import { getConfig } from "@/api/user";
 import SliderCheck from "@/components/Slider-Check";
@@ -196,73 +148,72 @@ export default {
   components: { SliderCheck },
   data() {
     return {
+      loginType: 1,
+      confirmAgreement: false,
       loginForm: {
         account: "",
         password: "",
         timestamp: "",
         code: "",
         type: 0,
-        sliderCheck: false,
+        sliderCheck: false
       },
       loginRules: {
         account: [
           {
             required: true,
             trigger: "blur",
-            message: this.$t("login.accountTip"),
-          },
+            message: this.$t("login.accountTip")
+          }
         ],
         password: [
           {
             required: true,
             trigger: "blur",
-            message: this.$t("login.passwordTip"),
-          },
+            message: this.$t("login.passwordTip")
+          }
         ],
         code: [
           {
             required: true,
             trigger: "blur",
-            message: this.$t("login.smsCode"),
-          },
-        ],
+            message: this.$t("login.smsCode")
+          }
+        ]
       },
       capsTooltip: false,
       loading: false,
       showDialog: false,
       imgUrl: "",
-      faceMsg: "", //控制人脸识别日志进度
-      success: false, //控制人脸登录是否成功
-      cut: false, //控制人脸识别是否成功
-      faceShow: false, //控制人脸识别圆形外框的特效图是否显示
+
       redirect: undefined,
       remember: false,
       otherQuery: {},
-      active: 1,
+
       codeLength: 4,
       needVerification: false,
       verificationType: 0,
-      showSliderShake: false,
+      showSliderShake: false
     };
   },
   computed: {
     ...mapState({
-      loginBg: (state) => state.settings.loginBg,
+      loginBg: state => state.settings.loginBg
     }),
     loginLoading() {
       return this.$store.state.user.loginLoading;
     },
     contentWidth() {
       return {
-        width: screen.width >= 1920 ? "76%" : "80%",
+        width: screen.width >= 1920 ? "76%" : "80%"
       };
     },
     loginbgImage() {
-      let loginBg = require("../../assets/loginimg/denglu-.png");
+      let loginBg = require("../../assets/loginimg/bg.png");
       return {
-        backgroundImage: "url(" + loginBg + ")",
+        backgroundImage: "url(" + loginBg + ")"
       };
-    },
+    }
   },
   watch: {
     active(val) {
@@ -280,15 +231,15 @@ export default {
       if (!val) this.loading = false;
     },
     $route: {
-      handler: function (route) {
+      handler: function(route) {
         const query = route.query;
         if (query) {
           this.redirect = query.redirect;
           this.otherQuery = this.getOtherQuery(query);
         }
       },
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   created() {
     // if (screen.width >= 1920) {
@@ -301,7 +252,7 @@ export default {
     //   });
     // }
     const _this = this;
-    document.onkeydown = function (e) {
+    document.onkeydown = function(e) {
       const { keyCode } = e;
       if (keyCode === 13) {
         _this.handleLogin();
@@ -320,7 +271,7 @@ export default {
     this.getConfig();
   },
   destroyed() {
-    document.onkeydown = function (e) {
+    document.onkeydown = function(e) {
       const { keyCode } = e;
       if (keyCode === 13) {
       }
@@ -328,7 +279,7 @@ export default {
   },
   methods: {
     getConfig() {
-      getConfig("admin").then((res) => {
+      getConfig("admin").then(res => {
         this.needVerification = !!res.data.enableVerificationCode;
         this.verificationType = res.verificationType || 0;
         if (this.needVerification && this.verificationType == 0) {
@@ -337,103 +288,18 @@ export default {
         }
       });
     },
-    openVideo(constraints, success, error) {
-      if (navigator.mediaDevices.getUserMedia) {
-        //最新的标准API
-        navigator.mediaDevices
-          .getUserMedia(constraints)
-          .then(success)
-          .catch(error);
-      } else if (navigator.webkitGetUserMedia) {
-        //webkit核心浏览器
-        navigator.webkitGetUserMedia(constraints, success, error);
-      } else if (navigator.mozGetUserMedia) {
-        //firfox浏览器
-        navigator.mozGetUserMedia(constraints, success, error);
-      } else if (navigator.getUserMedia) {
-        //旧版API
-        navigator.getUserMedia(constraints, success, error);
-      } else {
-        this.$message({ message: "获取摄像头权限失败", type: "warning" });
-      }
-    },
-    initFaceScan() {
-      let _this = this;
-      _this.faceMsg = '<p class="log-font">打开摄像头中...</p>';
-      let constraints = {
-        video: { width: 210, height: 210 },
-        audio: false,
-      };
-      //获得video摄像头区域
-      let video = document.getElementById("video_login");
-      let success = function (MediaStream) {
-        video.srcObject = MediaStream;
-        video.play();
-        _this.faceShow = true;
-        _this.faceMsg = "<p>正在获取人脸数据...</p>";
-      };
-      _this.openVideo(constraints, success);
 
-      let timer = setInterval(function () {
-        if (_this.cut) {
-          return;
-        }
-        //获得Canvas对象
-        let video = document.getElementById("video_login");
-        let canvas = document.getElementById("canvas_login");
-        let ctx = canvas.getContext("2d");
-        ctx.drawImage(video, 0, 0, 210, 210);
-        let base64File = canvas.toDataURL();
-        let formData = new FormData();
-        formData.append("file", base64File);
-        faceScan(formData).then((res) => {
-          if (res.data) {
-            _this.faceMsg = "<p>人脸识别中...</p>";
-            _this.imgData = base64File;
-            faceLogin(formData).then((res) => {
-              if (res.msg) {
-                _this.cut = true;
-                _this.closeVideo();
-                _this.faceMsg = "<p>识别成功，开始登录认证...</p>";
-                _this.handleFaceLogin(res.msg);
-              } else {
-                _this.cut = false;
-                _this.faceMsg =
-                  '<p style="color: red">识别失败，请重试或尝试其他方式登录！</p>';
-              }
-            });
-          }
-        });
-      }, 1000);
-    },
-    closeVideo() {
-      let video = document.getElementById("video_login");
-      if (video && video.srcObject) {
-        //关闭摄像头
-        for (let item of video.srcObject.getTracks()) {
-          item.stop();
-        }
-      }
-    },
     checkCapslock(e) {
       const { key } = e;
       this.capsTooltip = key && key.length === 1 && key >= "A" && key <= "Z";
     },
-    handleFaceLogin(key) {
-      this.loginForm.code = key;
-      console.log(this.loginForm);
-      this.$store.dispatch("user/login", this.loginForm).then(() => {
-        this.faceMsg = '<p style="color: #08b41f">认证通过，登录成功！</p>';
-        this.success = true;
-        this.$router.push({
-          path: this.redirect || "/home",
-          query: this.otherQuery,
-        });
-      });
-    },
+
     handleLogin() {
       if (this.loading) return;
-      this.$refs.loginForm.validate((valid) => {
+      if (!this.confirmAgreement) {
+        return this.$message.warning("请先同意用户协议");
+      }
+      this.$refs.loginForm.validate(valid => {
         if (valid) {
           if (this.needVerification && this.verificationType == 1) {
             if (!this.loginForm.sliderCheck) {
@@ -458,14 +324,14 @@ export default {
                 );
               } else {
                 this.clearCookie();
-              } 
-              console.log(this.loginForm)
-              if(this.loginForm.account == "hanfei"){
+              }
+              console.log(this.loginForm);
+              if (this.loginForm.account == "hanfei") {
                 this.$router.push("/enterprise/home");
-              }else{
+              } else {
                 this.$router.push("/home");
               }
-             
+
               // this.checkPassword();
             })
             .catch(() => {
@@ -496,7 +362,7 @@ export default {
         "userPwd" + "=" + c_pwd + ";path=/;expires=" + exdate.toGMTString();
     },
     //读取cookie
-    getCookie: function () {
+    getCookie: function() {
       if (document.cookie.length > 0) {
         var arr = document.cookie.split("; "); //这里显示的格式需要切割一下自己可输出看下
         for (var i = 0; i < arr.length; i++) {
@@ -512,7 +378,7 @@ export default {
       }
     },
     //清除cookie
-    clearCookie: function () {
+    clearCookie: function() {
       this.setCookie("", "", -1); //修改2值都为空，天数为负1天就好了
     },
     getOtherQuery(query) {
@@ -526,108 +392,140 @@ export default {
     changeBg(i) {
       this.$store.dispatch("settings/changeSetting", {
         key: "loginBg",
-        value: "bg" + i,
+        value: "bg" + i
       });
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
-@import "./login.scss";
-.input-with-code >>> .el-input-group__append {
-  padding: 0px;
-  background-color: #fff;
-  border: none;
-}
-.face-scan {
-  width: 350px;
-  height: 350px;
-  left: -25px;
-  position: absolute;
-}
-.face-scan-img {
-  background-image: url("../../assets/images/face_scan.gif");
-  background-size: cover;
-  background-position: center;
-  z-index: 9999;
+$bg: #fff;
+$cursor: #fff;
 
-  position: absolute;
-}
-.face-scan-success-img {
-  background-image: url("../../assets/images/face_scan_success.gif");
+.login-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   background-repeat: no-repeat;
-  background-position: center;
-  z-index: 99999;
-}
-.face-scan-inner {
-  /* margin-top: 100px;
-  margin-left: 105px;*/
-}
-.log-font {
-  text-align: center;
-  color: #666;
-  font-size: small;
-}
-.login-foot {
-  position: absolute;
-  color: #999;
-  font-size: 12px;
-  position: fixed;
-  bottom: 20px;
-  left: 31%;
-  text-align: left;
-}
-.change-img {
   display: flex;
-  flex-wrap: wrap;
-  img {
-    width: 70px;
-    height: 70px;
-  }
-  .img-active {
-    border: 3px solid #2db7f5;
+  align-items: center;
+  justify-content: center;
+  background-size: 100% 100%;
+  .login-content {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    border-radius: 5px;
+    box-shadow: 0px 0px 20px 0px rgba(127, 127, 127, 0.5);
+    overflow: hidden;
+    .login-img {
+      width: 676.87px;
+      height: 675px;
+      background-image: url("../../assets/loginimg/left.png");
+      background-image: 100% 100%;
+      background-repeat: no-repeat;
+    }
+    .login-form {
+      padding: 25px;
+      background-color: $bg;
+      position: relative;
+      .login-type {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 30px 0 50px;
+        gap: 30px;
+        .login-title {
+          font-family: PingFangSC-Medium;
+          font-weight: 500;
+          position: relative;
+          font-size: 24px;
+          color: #5c5d5e;
+          cursor: pointer;
+          &::after {
+            content: "";
+            width: 40px;
+            height: 7px;
+            background: #fff;
+            border-radius: 8px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -20px;
+          }
+          &.selected {
+            font-size: 26px;
+            color: #1a1a1b;
+            &::after {
+              background: #0971fd;
+            }
+          }
+        }
+      }
+
+      .el-form {
+        padding: 20px 30px;
+        >>> .el-form-item {
+          width: 100%;
+          height: 70px;
+          background: #eef3fb;
+          border-radius: 35px;
+          display: flex;
+          align-items: center;
+          margin-bottom: 30px;
+          .el-form-item__content {
+            width: 100%;
+            height: 100%;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            .el-input {
+              font-size: 20px;
+              flex: 1;
+              height: 100%;
+              .el-input__inner {
+                background-color: transparent;
+                border: none;
+                height: 100%;
+              }
+            }
+          }
+        }
+        input:-webkit-autofill {
+          box-shadow: 0 0 0px 1000px #fff inset !important;
+          -webkit-text-fill-color: #606266 !important;
+        }
+        input::-webkit-input-placeholder {
+          color: #a0acb7;
+        }
+        .login-btn {
+          width: 100%;
+          height: 60px;
+          border-radius: 35px;
+          font-size: 24px;
+          margin-bottom: 20px;
+        }
+        .foot {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          font-size: 12px;
+          color: #188ae2;
+          .register,
+          .forget {
+            cursor: pointer;
+          }
+        }
+        .forgetPassword {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          bottom: 20px;
+        }
+      }
+    }
   }
 }
-.change-btn {
-  position: fixed;
-  right: 50px;
-  bottom: 30px;
-  width: 50px;
-  height: 50px;
-  img {
-    width: 100%;
-    height: 100%;
-  }
-}
-.change-btn:hover {
-  opacity: 0.8;
-}
-.shake {
-  animation: shake 800ms ease-in-out;
-}
-@keyframes shake {
-  10%,
-  90% {
-    transform: translate3d(-1px, 0, 0);
-  }
-
-  20%,
-  80% {
-    transform: translate3d(+2px, 0, 0);
-  }
-
-  30%,
-  70% {
-    transform: translate3d(-4px, 0, 0);
-  }
-
-  40%,
-  60% {
-    transform: translate3d(+4px, 0, 0);
-  }
-
-  50% {
-    transform: translate3d(-4px, 0, 0);
-  }
+.login-container .login-foot {
+  text-align: center;
 }
 </style>

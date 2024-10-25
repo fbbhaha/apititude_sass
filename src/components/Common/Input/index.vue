@@ -86,5 +86,8 @@ export default {
     align-items: center;
     padding: 0 20px;
   }
+  .el-date-editor {
+    width: 100%;
+  }
 }
 </style>
