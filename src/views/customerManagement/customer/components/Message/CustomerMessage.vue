@@ -164,9 +164,12 @@
 <script>
 import CommonInput from "@/components/Common/Input/index.vue";
 import TipsTitle from "@/views/customerManagement/components/TipsTitle.vue";
-
+import getDictionaryTypeById from "@/api/systemData/dictionary";
 export default {
   name: "CustomerMessage",
+  props: {
+    companyId: [Number, String]
+  },
   data() {
     return {
       dictionary: {
@@ -244,7 +247,12 @@ export default {
       }
     };
   },
-  components: { CommonInput, TipsTitle }
+  components: { CommonInput, TipsTitle },
+  mounted() {
+    getDictionaryTypeById(
+      "614929708089349573,614928979719099845,616358168754132613,038d293fca544c86afa3f2bc65421fd7"
+    ).then(res => {});
+  }
 };
 </script>
 

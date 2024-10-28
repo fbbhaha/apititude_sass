@@ -8,6 +8,16 @@ export function getDictionaryType() {
   })
 }
 
+// 获取数据字典分类
+export function getDictionaryTypeById(params) {
+  return request({
+    url: '/api/extend/Kmkbasecompany/getDictList',
+    method: 'GET',
+    params
+  })
+}
+
+
 // 获取字典分类下拉框列表
 export function getDictionaryTypeSelector(id) {
   return request({

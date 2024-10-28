@@ -50,8 +50,7 @@ import {
   Version,
   LoginTab,
   SinglePicture,
-  CommonLinks,
-  LoginForm2,
+  CommonLinks
 } from "@/components/VisualPortal";
 import VueGridLayout from "vue-grid-layout";
 import { myBrowser } from "@/utils";
@@ -60,9 +59,9 @@ export default {
     layout: { type: Array, default: () => [] },
     layoutBg: {
       type: String,
-      default: "",
+      default: ""
     },
-    activeLayout: { type: Object, default: () => ({}) },
+    activeLayout: { type: Object, default: () => ({}) }
   },
   components: {
     GridLayout: VueGridLayout.GridLayout,
@@ -73,14 +72,13 @@ export default {
     LoginForm,
     Version,
     LoginTab,
-    CommonLinks,
-    LoginForm2,
+    CommonLinks
   },
   data() {
     return {
       activeId: null,
       activeData: null,
-      browser: "",
+      browser: ""
     };
   },
   computed: {
@@ -97,33 +95,33 @@ export default {
         backgroundImage: "url(" + layoutBg + ")",
         gridTemplateRows:
           this.activeLayout.type === "horizontal" ? rows : "100%",
-          gridRows: this.activeLayout.type === "horizontal" ? rows : "100%",
+        gridRows: this.activeLayout.type === "horizontal" ? rows : "100%",
         gridTemplateColumns:
           this.activeLayout.type === "vertical" ? cols : "100%",
-          gridColumns: this.activeLayout.type === "vertical" ? cols : "100%",
-        height: document.body.clientHeight + "px",
+        gridColumns: this.activeLayout.type === "vertical" ? cols : "100%",
+        height: document.body.clientHeight + "px"
       };
     },
     gridItemStyle() {
-      return (item => {
-        let obj = {}
-        if(item.gridCss) {
+      return item => {
+        let obj = {};
+        if (item.gridCss) {
           obj = JSON.parse(item.gridCss);
         }
-        if(item.position && item.position.type === 'fixed') {
-          let top = 0
-          let left = 0
-          if(item.position.bottom === 0) {
-            top = document.body.clientHeight - item.h * this.rowHeight
+        if (item.position && item.position.type === "fixed") {
+          let top = 0;
+          let left = 0;
+          if (item.position.bottom === 0) {
+            top = document.body.clientHeight - item.h * this.rowHeight;
           }
-          if(item.position.right === 0) {
-            left = document.body.clientWidth
+          if (item.position.right === 0) {
+            left = document.body.clientWidth;
           }
 
-          obj.transform = `translate3d(${left}px, ${top}px, 0px) !important`
+          obj.transform = `translate3d(${left}px, ${top}px, 0px) !important`;
         }
-        return obj
-      })
+        return obj;
+      };
     },
     configStyle() {
       return (value, key) => {
@@ -134,15 +132,17 @@ export default {
         }
         if (config[key].bgImg) {
           let bgImg =
-            this.define.comUrl + "/api/visualdev/PortalTheme/file/" + config[key].bgImg;
+            this.define.comUrl +
+            "/api/visualdev/PortalTheme/file/" +
+            config[key].bgImg;
           obj.backgroundImage = "url(" + bgImg + ")";
           obj.backgroundRepeat = "no-repeat";
           obj.backgroundSize = "100% 100%";
         }
-        if(config[key].bgColor) {
-          obj.backgroundColor = config[key].bgColor
+        if (config[key].bgColor) {
+          obj.backgroundColor = config[key].bgColor;
         }
-         if (this.browser === "IE") {
+        if (this.browser === "IE") {
           obj.gridRow = value.row;
           obj.gridColumn = value.col;
         }
@@ -151,7 +151,7 @@ export default {
     },
     rowHeight() {
       return document.body.clientHeight / 17.5;
-    },
+    }
   },
   mounted() {
     this.browser = myBrowser();
@@ -159,8 +159,8 @@ export default {
   methods: {
     changeTheme(fileId) {
       this.$emit("change-theme", fileId);
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

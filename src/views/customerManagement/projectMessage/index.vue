@@ -5,6 +5,9 @@
 <script>
 export default {
   name: "ProjectMessage",
+  props: {
+    companyId: [Number, String]
+  },
   data() {
     return {};
   },

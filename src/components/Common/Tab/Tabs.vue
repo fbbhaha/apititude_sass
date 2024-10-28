@@ -52,7 +52,7 @@ export default {
 
 <style scpoed lang="scss">
 .Tab {
-  padding: 20px 50px;
+  padding: 20px 30px;
   height: 100%;
   box-sizing: border-box;
 
@@ -61,7 +61,7 @@ export default {
     display: flex;
     align-items: center;
     gap: 0 35px;
-    padding: 10px 0 10px;
+    padding: 10px 20px 10px;
     box-sizing: content-box;
     .tabItem {
       padding: 0 0 10px;

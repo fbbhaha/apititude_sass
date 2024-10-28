@@ -5,7 +5,7 @@
         <el-button
           type="primary"
           icon="el-icon-circle-plus-outline"
-          @click="showMessageDialog = true"
+          @click="showBaseMessage()"
           >新增客户</el-button
         >
       </div>
@@ -19,6 +19,7 @@
         </el-input>
         <el-button plain>重置</el-button>
         <el-button type="primary">搜索</el-button>
+        <TableColumnControl :columns="tableColumn" />
       </div>
     </div>
     <div class="content">
@@ -36,21 +37,21 @@
         style="width: 100%"
         height="calc(100% - 70px)"
       >
+        <el-table-column
+          v-for="item in tableColumn"
+          :key="item.field"
+          :prop="item.field"
+          :label="item.name"
+        >
+        </el-table-column>
         <el-table-column label="操作" align="center" width="140">
           <template slot-scope="scope">
             <div class="operationButtons">
-              <i class="el-icon-edit" @click="editBaseMessage(scope.row)"></i>
+              <i class="el-icon-edit" @click="showBaseMessage(scope.row)"></i>
               <i class="el-icon-delete"></i>
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="companyName" label="客户名称"> </el-table-column>
-        <el-table-column prop="code" label="客户类型"> </el-table-column>
-        <el-table-column prop="customerName" label="业务员"> </el-table-column>
-        <el-table-column prop="customerName" label="联系人"> </el-table-column>
-        <el-table-column prop="contactTel" label="手机号"> </el-table-column>
-        <el-table-column prop="address" label="城市"> </el-table-column>
-        <el-table-column prop="code" label="最后行动时间"> </el-table-column>
       </el-table>
     </div>
     <Message :show.sync="showMessageDialog" :data="baseMessage" />
@@ -60,6 +61,7 @@
 <script>
 import { getCustomerList } from "@/api/customter";
 import Message from "./components/Message/index.vue";
+import TableColumnControl from "@/components/Common/TableColumnControl/index.vue";
 export default {
   name: "customer",
   data() {
@@ -70,12 +72,21 @@ export default {
         currentPage: 1,
         pageSize: 10
       },
+      tableColumn: [
+        { name: "客户名称", field: "companyName" },
+        { name: "客户类型", field: "code" },
+        { name: "业务员", field: "customerName1" },
+        { name: "联系人", field: "customerName2" },
+        { name: "手机号", field: "contactTel" },
+        { name: "城市", field: "address" },
+        { name: "最后行动时间", field: "datetime" }
+      ],
       tableData: [],
       showMessageDialog: false,
       baseMessage: null
     };
   },
-  components: { Message },
+  components: { Message, TableColumnControl },
   mounted() {
     this.initTableList();
   },
@@ -85,15 +96,17 @@ export default {
         this.tableData = res.data.list;
       });
     },
-    editBaseMessage(data) {
+    showBaseMessage(data) {
       this.baseMessage = data;
+      console.log(data);
+
       this.showMessageDialog = true;
     }
   }
 };
 </script>
 
-<style scpoed lang="scss">
+<style scoped lang="scss">
 .customer {
   height: 100%;
   .searchBox {

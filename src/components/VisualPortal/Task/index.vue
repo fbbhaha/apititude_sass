@@ -28,8 +28,8 @@
       </div>
       <div class="right">
         <span v-if="item.showFresh" title="刷新" class="item">
-            <i class="el-icon-refresh-right" @click="getData"></i
-          ></span>
+          <i class="el-icon-refresh-right" @click="getData"></i
+        ></span>
         <span v-if="item.showMore" title="更多" class="item">
           <i class="el-icon-more more" @click="jumpToMore"></i
         ></span>
@@ -53,7 +53,6 @@
 </template>
 <script>
 import { mixin } from "../visualPortalMixin";
-import { getInterfaceData } from "@/api/home";
 export default {
   mixins: [mixin],
   mounted() {
@@ -65,13 +64,8 @@ export default {
       if (!this.dataInterface) {
         return;
       }
-      getInterfaceData(this.dataInterface).then((res) => {
-        this.loading = false;
-        this.list = res.data;
-        return;
-      });
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

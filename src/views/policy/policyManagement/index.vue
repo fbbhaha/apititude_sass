@@ -1,10 +1,10 @@
 <template>
-  <div class="ContractInformation"></div>
+  <div class="policyManagement"></div>
 </template>
 
 <script>
 export default {
-  name: "ContractInformation",
+  name: "policyManagement",
   data() {
     return {};
   },

@@ -77,8 +77,7 @@ import {
   LoginForm,
   Version,
   LoginTab,
-  CommonLinks,
-  LoginForm2,
+  CommonLinks
 } from "@/components/VisualPortal";
 import VueGridLayout from "vue-grid-layout";
 import { getPortalInfo } from "@/api/onlineDev/portal";
@@ -86,19 +85,19 @@ export default {
   props: {
     config: {
       type: Object,
-      default: () => ({}),
+      default: () => ({})
     },
     portalId: {
       type: String,
-      default: "",
-    },
+      default: ""
+    }
   },
   data() {
     return {
       layout: [],
       layoutBg: "",
       activeLayout: {},
-      loading: false,
+      loading: false
     };
   },
   components: {
@@ -110,8 +109,7 @@ export default {
     LoginForm,
     Version,
     LoginTab,
-    CommonLinks,
-    LoginForm2,
+    CommonLinks
   },
   computed: {
     gridLayout() {
@@ -129,11 +127,11 @@ export default {
         gridTemplateColumns:
           this.activeLayout.type === "vertical" ? cols : "100%",
         backgroundImage: "url(" + layoutBg + ")",
-        height: document.body.clientHeight + "px",
+        height: document.body.clientHeight + "px"
       };
     },
     gridItemStyle() {
-      return (key) => {
+      return key => {
         let config = this.activeLayout.config;
         let obj = {};
         if (config[key].css) {
@@ -141,7 +139,9 @@ export default {
         }
         if (config[key].bgImg) {
           let bgImg =
-            this.define.comUrl + "/api/visualdev/PortalTheme/file/" + config[key].bgImg;
+            this.define.comUrl +
+            "/api/visualdev/PortalTheme/file/" +
+            config[key].bgImg;
           obj.backgroundImage = "url(" + bgImg + ")";
           obj.backgroundRepeat = "no-repeat";
           obj.backgroundSize = "100% 100%";
@@ -154,7 +154,7 @@ export default {
     },
     rowHeight() {
       return parseInt(document.body.clientHeight / 17.5);
-    },
+    }
   },
   methods: {
     onOpen() {
@@ -166,7 +166,7 @@ export default {
       }
       this.loading = true;
       getPortalInfo(this.portalId)
-        .then((res) => {
+        .then(res => {
           if (res.data && res.data.formData) {
             let formData = JSON.parse(res.data.formData);
             this.layout = formData.layout || [];
@@ -175,14 +175,14 @@ export default {
           }
           this.loading = false;
         })
-        .catch((err) => {
+        .catch(err => {
           this.loading = false;
         });
     },
     closeDialog() {
       this.$emit("update:visible", false);
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

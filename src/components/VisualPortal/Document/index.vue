@@ -36,11 +36,9 @@
       <template v-if="list.length">
         <div class="item" v-for="(item, i) in list" :key="i">
           <span class="name">
-            <el-button
-              type="text"
-              @click="previewFile(item.fileId)"
-              >{{ item.name }}</el-button
-            >
+            <el-button type="text" @click="previewFile(item.fileId)">{{
+              item.name
+            }}</el-button>
           </span>
           <span class="download">
             <el-button
@@ -56,25 +54,25 @@
 </template>
 <script>
 import { mixin } from "../visualPortalMixin";
-import { getDownloadUrl, preview } from "@/api/common";
+import { getDownloadUrl } from "@/api/common";
 export default {
   mixins: [mixin],
   data() {
     return {
-      list: [],
+      list: []
     };
   },
   methods: {
     downloadFile(fileId) {
-      getDownloadUrl("annex", fileId).then((res) => {
+      getDownloadUrl("annex", fileId).then(res => {
         if (res.data.url)
           window.location.href = this.define.comUrl + res.data.url;
       });
     },
     previewFile(fileId) {
-      preview("annex", fileId);
-    },
-  },
+      // preview("annex", fileId);
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

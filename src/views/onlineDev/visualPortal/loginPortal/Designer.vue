@@ -136,8 +136,7 @@ import {
   Version,
   LoginTab,
   SinglePicture,
-  CommonLinks,
-  LoginForm2,
+  CommonLinks
 } from "@/components/VisualPortal/index.js";
 export default {
   name: "CCIT-Designer",
@@ -154,8 +153,7 @@ export default {
     Version,
     LoginTab,
     SinglePicture,
-    CommonLinks,
-    LoginForm2,
+    CommonLinks
   },
   data() {
     return {
@@ -169,16 +167,16 @@ export default {
       uploadVisible: false,
       uploadForm: {
         fullName: "",
-        fileId: "",
+        fileId: ""
       },
 
       defaultConf: {
         layouyId: 100,
         layout: [],
-        layoutBg: "",
+        layoutBg: ""
       },
       activeLayout: {},
-      browser: "",
+      browser: ""
     };
   },
   watch: {
@@ -186,8 +184,8 @@ export default {
       handler(val) {
         if (val.length === 0) this.config.layouyId = 100;
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
   mounted() {
     this.browser = myBrowser();
@@ -224,11 +222,11 @@ export default {
         gridTemplateColumns:
           this.activeLayout.type === "vertical" ? cols : "100%",
         gridColumns: this.activeLayout.type === "vertical" ? cols : "100%",
-        height: document.body.clientHeight + "px",
+        height: document.body.clientHeight + "px"
       };
     },
     gridItemStyle() {
-      return (item) => {
+      return item => {
         let obj = {};
         if (item.gridCss) {
           obj = JSON.parse(item.gridCss);
@@ -275,7 +273,7 @@ export default {
     },
     rowHeight() {
       return parseInt(document.body.clientHeight / 17.5);
-    },
+    }
   },
   methods: {
     getData() {
@@ -285,7 +283,7 @@ export default {
       });
     },
     addComponent(item) {
-      let index = this.layout.findIndex((layout) => {
+      let index = this.layout.findIndex(layout => {
         return layout.ccitKey === item.ccitKey;
       });
       if (index > -1) return;
@@ -299,7 +297,7 @@ export default {
       this.config.layouyId++;
     },
     handleRemoveItem(i) {
-      this.layout = this.layout.filter((item) => item.i !== i);
+      this.layout = this.layout.filter(item => item.i !== i);
       this.activeId = null;
       this.activeData = null;
     },
@@ -328,8 +326,8 @@ export default {
     },
     changeTheme(fileId) {
       this.config.layoutBg = fileId;
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

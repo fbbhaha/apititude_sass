@@ -59,6 +59,9 @@
 <script>
 export default {
   name: "ContactPerson",
+  props: {
+    companyId: [Number, String]
+  },
   data() {
     return {
       showDialog: false,

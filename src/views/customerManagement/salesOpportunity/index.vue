@@ -133,6 +133,9 @@ import CommonInput from "@/components/Common/Input/index.vue";
 
 export default {
   name: "SalesOpportunity",
+  props: {
+    companyId: [Number, String]
+  },
   data() {
     return {
       innerDrawer: false,
