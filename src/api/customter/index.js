@@ -10,11 +10,11 @@ export const getCustomerList = (data) => {
     })
 }
 // 新增
-export const addCustomer = (params) => {
+export const addCustomer = (data) => {
     return request({
-        url: `/api/extend/saleOrder/Customer`,
+        url: `/api/extend/Kmkbasecompany`,
         method: 'post',
-        params
+        data
     })
 }
 // 删除

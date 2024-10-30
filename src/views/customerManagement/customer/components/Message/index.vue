@@ -85,9 +85,9 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .extraMessage {
-  .el-drawer {
+  >>> .el-drawer {
     background: #f5f7fc;
     .el-drawer__header {
       margin-bottom: 0;
