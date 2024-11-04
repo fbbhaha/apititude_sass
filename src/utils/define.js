@@ -1,12 +1,10 @@
 // 开发环境接口配置
-const APIURl = 'http://ruy46n.natappfree.cc/'
 module.exports = {
-  APIURl: APIURl,
-  APPURI: 'http://ruy46n.natappfree.cc/',
+  APPURI: process.env.VUE_APP_BASE_URL,
   timeout: process.env.NODE_ENV === 'development' ? 1000000 : 1000000,
-  WebSocketUrl: APIURl.replace('http', 'ws') + '/api/message/websocket',
+  WebSocketUrl: process.env.VUE_APP_BASE_WSS,
   comUploadUrl: process.env.VUE_APP_BASE_API + '/api/file/Uploader',
-  comUrl: "http://ruy46n.natappfree.cc",
+  comUrl: process.env.VUE_APP_BASE_URL,
   // 大屏应用前端路径
   dataV: process.env.NODE_ENV === 'development' ? 'http://localhost:8100/DataV' : process.env.VUE_APP_BASE_API + '/DataV',
   // 数据报表

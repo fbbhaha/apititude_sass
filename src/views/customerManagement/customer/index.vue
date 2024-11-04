@@ -43,6 +43,9 @@
           :prop="item.field"
           :label="item.name"
         >
+          <!-- <template slot-scope="scope">
+            {{item.}}
+          </template> -->
         </el-table-column>
         <el-table-column label="操作" align="center" width="140">
           <template slot-scope="scope">
@@ -74,10 +77,10 @@ export default {
       },
       tableColumn: [
         { name: "客户名称", field: "companyName" },
-        { name: "客户类型", field: "code" },
-        { name: "业务员", field: "customerName1" },
-        { name: "联系人", field: "customerName2" },
-        { name: "手机号", field: "contactTel" },
+        { name: "客户类型", field: "companyType", callback: v => {} },
+        { name: "业务员", field: "linkMan" },
+        { name: "联系人", field: "linkMan" },
+        { name: "手机号", field: "mobile" },
         { name: "城市", field: "address" },
         { name: "最后行动时间", field: "datetime" }
       ],

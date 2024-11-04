@@ -1,7 +1,6 @@
 'use strict'
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
-const define = require('./src/utils/define.js')
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 
 function resolve(dir) {
@@ -26,7 +25,7 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  publicPath: '/',
+  publicPath: '.',
   outputDir: 'dist',
   assetsDir: 'static',
   // lintOnSave: process.env.NODE_ENV === 'development',
@@ -43,16 +42,16 @@ module.exports = {
     // 接口转发
     proxy: {
       '/dev': {
-        target: define.APIURl,
+        target: process.env.VUE_APP_BASE_URL,
         changeOrigin: true,
         pathRewrite: {
           '^/dev': ''
         }
-      },
-      '/api': {
-        target: define.APIURl,
-        changeOrigin: true
       }
+      // '/api': {
+      //   target: define.APIURl,
+      //   changeOrigin: true
+      // }
     }
   },
 
