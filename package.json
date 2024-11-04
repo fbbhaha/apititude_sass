@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=development vue-cli-service serve --open",
-    "build": "cross-env NODE_ENV=production  vue-cli-service build",
+    "build": "cross-env NODE_ENV=production NODE_OPTIONS=--openssl-legacy-provide  vue-cli-service build",
     "preview": "node build/index.js --preview",
     "lint": "eslint --ext .js,.vue src",
     "test:unit": "jest --clearCache && vue-cli-service test:unit",
