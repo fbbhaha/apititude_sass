@@ -125,7 +125,7 @@
     "vue-template-compiler": "2.6.10"
   },
   "engines": {
-    "node": ">=8.9",
+    "node": ">=8.9 <=16.18.2",
     "npm": ">= 3.0.0"
   },
   "browserslist": [
